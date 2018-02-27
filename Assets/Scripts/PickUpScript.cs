@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummyScript : MonoBehaviour {
+abstract public class PickUpScript : MonoBehaviour {
+
+    protected int value;
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +15,6 @@ public class DummyScript : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public abstract void ApplyScore(PlayerScript player);
 }
