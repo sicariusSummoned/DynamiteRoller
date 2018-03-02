@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
     public PlayerScript[] Players = new PlayerScript[4];
     private int ActivePlayer;
     private List<PickUpScript> Deck;
+    public GameObject activePanel;
+    public GameObject waitingPanel;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +27,7 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-    private void SwitchActive()
+    public void SwitchActive()
     {
         // TODO: move current active down
         if(ActivePlayer < 3)
@@ -36,6 +39,19 @@ public class GameManager : MonoBehaviour {
             ActivePlayer = 0;
         }
         // TODO: move new active up
+
+        //move the gameobjects between holders
+        //get the active player currently in activePanel
+        Transform activePlayer = activePanel.transform.GetChild(0);
+
+        //get the next player in line in waiting dwarfs
+        Transform waitingPlayer = waitingPanel.transform.GetChild(0);
+
+        //move the active player into the waiting queue
+        activePlayer.SetParent(waitingPanel.transform);
+
+        //move the waiting player into active
+        waitingPlayer.SetParent(activePanel.transform);
     }
 
     public void PickSome(int picks)
