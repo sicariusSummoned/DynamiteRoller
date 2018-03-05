@@ -29,12 +29,19 @@ public class PlayerScript : MonoBehaviour {
     //add points gotten to the player's score
     public void ApplyScore(int points)
     {
+        Debug.Log("Gained " + points + " points");
         score += points;
     }
 
     //apply the bomb effect
     public void Bomb()
     {
+        Debug.Log("BOOM! Lose half your score");
         score = (int) Mathf.Ceil((float)(score / 2.0));
+    }
+
+    public int getScore()
+    {
+        return score;
     }
 }
