@@ -44,4 +44,13 @@ public class PlayerScript : MonoBehaviour {
     {
         return score;
     }
+
+    //If the player has a powerup, use it
+    public void ApplyPowerUp()
+    {
+        if (powerUp != null)
+        {
+            //powerUp.apply();
+        }
+    }
 }
