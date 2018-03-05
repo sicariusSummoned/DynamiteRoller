@@ -24,9 +24,9 @@ public class GameManagerScript : MonoBehaviour {
         };
         Refill();
 
-        Debug.Log("GAME START!");
-        Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
-        Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+        //Debug.Log("GAME START!");
+        //Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
+        //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
         Debug.Log("The visible Gems are: " + Deck[0].name + ", " + Deck[1].name + ", " + Deck[2].name);
 
 
@@ -58,8 +58,8 @@ public class GameManagerScript : MonoBehaviour {
 
         if (!gameOver)
         {
-            Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
-            Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+            //Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
+            //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
             Debug.Log("The visible Gems are: " + Deck[0].name + ", " + Deck[1].name + ", " + Deck[2].name);
 
             // TODO: move new active up
@@ -95,7 +95,7 @@ public class GameManagerScript : MonoBehaviour {
             Deck.RemoveAt(0);
         }
 
-        Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+        //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
 
         firstTime = false;
 
@@ -188,22 +188,22 @@ public class GameManagerScript : MonoBehaviour {
 
         if(s1 >= s2 && s1 >= s3 && s1 >= s4)
         {
-            Debug.Log("Player 1 wins with a score of " + s1);
+            Debug.Log("RED wins with a score of " + s1);
         }
 
         if(s2 >= s1 && s2 >= s3 && s2 >= s4)
         {
-            Debug.Log("Player 2 wins with a score of " + s2);
+            Debug.Log("BLUE wins with a score of " + s2);
         }
 
         if(s3 >= s1 && s3 >= s2 && s3 >= s4)
         {
-            Debug.Log("Player 3 wins with a score of " + s3);
+            Debug.Log("YELLOW wins with a score of " + s3);
         }
 
         if(s4 >= s1 && s4 >= s2 && s4 >= s3)
         {
-            Debug.Log("Player 4 wins with a score of " + s4);
+            Debug.Log("GREEN wins with a score of " + s4);
         }
 
     }
