@@ -10,7 +10,7 @@ public class GameManagerScript : MonoBehaviour {
     private List<GameObject> Deck;
     public GameObject activePanel;
     public GameObject waitingPanel;
-    private bool firstTime;
+    private bool firstTime = true;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +22,12 @@ public class GameManagerScript : MonoBehaviour {
         };
         Refill();
 
+        Debug.Log("GAME START!");
+        Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
+        Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+        Debug.Log("The visible Gems are: " + Deck[0].name + ", " + Deck[1].name + ", " + Deck[2].name);
+
+
         firstTime = true;
     }
 	
@@ -32,8 +38,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void SwitchActive()
     {
-        // TODO: move current active down
-        if(ActivePlayer < 3)
+        if (ActivePlayer < 3)
         {
             ActivePlayer++;
         }
@@ -42,8 +47,11 @@ public class GameManagerScript : MonoBehaviour {
             ActivePlayer = 0;
         }
 
+
+
         Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
         Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+        Debug.Log("The visible Gems are: " + Deck[0].name + ", " + Deck[1].name + ", " + Deck[2].name);
 
         // TODO: move new active up
 
@@ -72,6 +80,8 @@ public class GameManagerScript : MonoBehaviour {
             Deck.RemoveAt(0);
         }
 
+        firstTime = false;
+
         //call it here or update?
         Refill();
     }
@@ -93,13 +103,6 @@ public class GameManagerScript : MonoBehaviour {
             SwitchActive();
         }
 
-        else
-        {
-            Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
-
-            firstTime = false;
-        }
-
     }
 
     private GameObject GenPickup()
@@ -112,26 +115,31 @@ public class GameManagerScript : MonoBehaviour {
 
         if(roll <= 36)
         {
+            newObj.name = "1";
             newObj.AddComponent<Gem1Script>();
         }
 
         else if(roll > 36 && roll <= 58)
         {
+            newObj.name = "2";
             newObj.AddComponent<Gem2Script>();
         }
 
         else if(roll > 58 && roll <= 80)
         {
+            newObj.name = "BOMB!";
             newObj.AddComponent<BombScript>();
         }
 
         else if(roll > 80 && roll <= 94)
         {
+            newObj.name = "3";
             newObj.AddComponent<Gem3Script>();
         }
 
         else if(roll > 94)
         {
+            newObj.name = "5";
             newObj.AddComponent<Gem5Script>();
         }
 
