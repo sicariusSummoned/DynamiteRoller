@@ -11,6 +11,8 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject activePanel;
     public GameObject waitingPanel;
     private bool firstTime = true;
+    private int roundCounter = 0;
+    private bool gameOver = false;
 
 	// Use this for initialization
 	void Start () {
@@ -44,29 +46,42 @@ public class GameManagerScript : MonoBehaviour {
         }
         else
         {
+            roundCounter++;
             ActivePlayer = 0;
+
+            if(roundCounter >= 4)
+            {
+                gameOver = true;
+            }
         }
 
 
+        if (!gameOver)
+        {
+            Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
+            Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+            Debug.Log("The visible Gems are: " + Deck[0].name + ", " + Deck[1].name + ", " + Deck[2].name);
 
-        Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
-        Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
-        Debug.Log("The visible Gems are: " + Deck[0].name + ", " + Deck[1].name + ", " + Deck[2].name);
+            // TODO: move new active up
 
-        // TODO: move new active up
+            //move the gameobjects between holders
+            //get the active player currently in activePanel
+            Transform activePlayer = activePanel.transform.GetChild(0);
 
-        //move the gameobjects between holders
-        //get the active player currently in activePanel
-        Transform activePlayer = activePanel.transform.GetChild(0);
+            //get the next player in line in waiting dwarfs
+            Transform waitingPlayer = waitingPanel.transform.GetChild(0);
 
-        //get the next player in line in waiting dwarfs
-        Transform waitingPlayer = waitingPanel.transform.GetChild(0);
+            //move the active player into the waiting queue
+            activePlayer.SetParent(waitingPanel.transform);
 
-        //move the active player into the waiting queue
-        activePlayer.SetParent(waitingPanel.transform);
+            //move the waiting player into active
+            waitingPlayer.SetParent(activePanel.transform);
+        }
 
-        //move the waiting player into active
-        waitingPlayer.SetParent(activePanel.transform);
+        else if(gameOver)
+        {
+            endGame();
+        }
     }
 
     //active player gain points
@@ -79,6 +94,8 @@ public class GameManagerScript : MonoBehaviour {
             Destroy(Deck[0]);
             Deck.RemoveAt(0);
         }
+
+        Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
 
         firstTime = false;
 
@@ -150,5 +167,44 @@ public class GameManagerScript : MonoBehaviour {
     {
         return Players[ActivePlayer];
     }
-    
+
+    private void endGame()
+    {
+        Debug.Log("Game over!");
+
+        //disable all buttons
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("TakeButton");
+
+        foreach(GameObject button in buttons)
+        {
+            button.GetComponent<Button>().interactable = false;
+        }
+
+        //report player(s) with most score
+        int s1 = Players[0].getScore();
+        int s2 = Players[1].getScore();
+        int s3 = Players[2].getScore();
+        int s4 = Players[3].getScore();
+
+        if(s1 >= s2 && s1 >= s3 && s1 >= s4)
+        {
+            Debug.Log("Player 1 wins with a score of " + s1);
+        }
+
+        if(s2 >= s1 && s2 >= s3 && s2 >= s4)
+        {
+            Debug.Log("Player 2 wins with a score of " + s2);
+        }
+
+        if(s3 >= s1 && s3 >= s2 && s3 >= s4)
+        {
+            Debug.Log("Player 3 wins with a score of " + s3);
+        }
+
+        if(s4 >= s1 && s4 >= s2 && s4 >= s3)
+        {
+            Debug.Log("Player 4 wins with a score of " + s4);
+        }
+
+    }
 }

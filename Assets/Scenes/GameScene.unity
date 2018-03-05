@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 382992532}
   m_Layer: 5
   m_Name: Take5
-  m_TagString: Untagged
+  m_TagString: TakeButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -833,7 +833,7 @@ GameObject:
   - component: {fileID: 411696009}
   m_Layer: 5
   m_Name: Take2
-  m_TagString: Untagged
+  m_TagString: TakeButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -968,7 +968,7 @@ GameObject:
   - component: {fileID: 466973768}
   m_Layer: 5
   m_Name: Take1
-  m_TagString: Untagged
+  m_TagString: TakeButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1378,7 +1378,7 @@ GameObject:
   - component: {fileID: 943027420}
   m_Layer: 5
   m_Name: Take4
-  m_TagString: Untagged
+  m_TagString: TakeButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1854,7 +1854,7 @@ GameObject:
   - component: {fileID: 1212077882}
   m_Layer: 5
   m_Name: Take3
-  m_TagString: Untagged
+  m_TagString: TakeButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
