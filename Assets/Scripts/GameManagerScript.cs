@@ -10,9 +10,14 @@ public class GameManagerScript : MonoBehaviour {
     private List<GameObject> Deck;
     public GameObject activePanel;
     public GameObject waitingPanel;
+    public GameObject activeGems;
+    public GameObject waitingGems;
     private bool firstTime = true;
     private int roundCounter = 0;
     private bool gameOver = false;
+
+    private const float PAUSE_DUR = 0.4f;
+    private const int DECK_CAP = 8;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +25,7 @@ public class GameManagerScript : MonoBehaviour {
 
         Deck = new List<GameObject>
         {
-            Capacity = 5
+            Capacity = DECK_CAP
         };
         Refill();
 
@@ -87,20 +92,7 @@ public class GameManagerScript : MonoBehaviour {
     //active player gain points
     public void PickSome(int picks)
     {
-        //grab front, reset current front to last one.
-        for(int i = 0; i < picks; i++)
-        {
-            Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
-            Destroy(Deck[0]);
-            Deck.RemoveAt(0);
-        }
-
-        //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
-
-        firstTime = false;
-
-        //call it here or update?
-        Refill();
+        StartCoroutine(TakeItems(picks));
     }
 
     private void Refill()
@@ -108,10 +100,21 @@ public class GameManagerScript : MonoBehaviour {
         //not sure when the value is checked so this way when the count changes we don't mess with the loop
         int initCount = Deck.Count;
 
-        for(int i = 0; i < Deck.Capacity - initCount; i++)
+        for (int i = 0; i < Deck.Capacity - initCount; i++)
         {
             //make new pickup
             Deck.Add(GenPickup());
+
+            if(i + initCount <= 2)
+            {
+                Deck[i + initCount].SetActive(true);
+                Deck[i + initCount].transform.SetParent(activeGems.transform);
+            }
+
+            else
+            {
+                Deck[i + initCount].transform.SetParent(waitingGems.transform);
+            }
         }
 
         //just call this here?
@@ -126,39 +129,41 @@ public class GameManagerScript : MonoBehaviour {
     {
         float randVal = Random.value;
 
-        GameObject newObj = new GameObject("pickup");
+        GameObject newObj;
 
         int roll = Mathf.CeilToInt(randVal * 100);
 
         if(roll <= 36)
         {
-            newObj.name = "1";
-            newObj.AddComponent<Gem1Script>();
+            newObj = (GameObject)Instantiate(Resources.Load("Prefabs/Gem1"));
         }
 
         else if(roll > 36 && roll <= 58)
         {
-            newObj.name = "2";
-            newObj.AddComponent<Gem2Script>();
+            newObj = (GameObject)Instantiate(Resources.Load("Prefabs/Gem2"));
         }
 
         else if(roll > 58 && roll <= 80)
         {
-            newObj.name = "BOMB!";
-            newObj.AddComponent<BombScript>();
+            newObj = (GameObject)Instantiate(Resources.Load("Prefabs/Dynamite"));
         }
 
-        else if(roll > 80 && roll <= 94)
+        else if (roll > 80 && roll <= 94)
         {
-            newObj.name = "3";
-            newObj.AddComponent<Gem3Script>();
+            newObj = (GameObject)Instantiate(Resources.Load("Prefabs/Gem3"));
         }
 
-        else if(roll > 94)
+        else if (roll > 94)
         {
-            newObj.name = "5";
-            newObj.AddComponent<Gem5Script>();
+            newObj = (GameObject)Instantiate(Resources.Load("Prefabs/Gem5"));
         }
+
+        else
+        {
+            newObj = (GameObject)Instantiate(Resources.Load("Prefabs/Dynamite"));
+        }
+
+        newObj.SetActive(false);
 
         return newObj;
     }
@@ -205,6 +210,39 @@ public class GameManagerScript : MonoBehaviour {
         {
             Debug.Log("GREEN wins with a score of " + s4);
         }
+
+    }
+
+    private IEnumerator TakeItems(int picks)
+    {
+        //grab front, reset current front to last one.
+        for (int i = 0; i < picks; i++)
+        {
+            yield return new WaitForSeconds(PAUSE_DUR);
+
+            Transform frontGem = activeGems.transform.GetChild(0);
+            Transform waitingGem = waitingGems.transform.GetChild(0);
+
+
+            Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
+            Destroy(Deck[0]);
+            Destroy(frontGem);
+            Deck.RemoveAt(0);
+
+            Deck[2].SetActive(true);
+
+
+            waitingGem.SetParent(activeGems.transform);
+        }
+
+        yield return new WaitForSeconds(PAUSE_DUR);
+
+        //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
+
+        firstTime = false;
+
+        //call it here or update?
+        Refill();
 
     }
 }
