@@ -117,6 +117,14 @@ public class GameManagerScript : MonoBehaviour {
             }
         }
 
+        //enable all buttons
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("TakeButton");
+
+        foreach (GameObject button in buttons)
+        {
+            button.GetComponent<Button>().interactable = true;
+        }
+
         //just call this here?
         if (!firstTime)
         {
@@ -215,6 +223,15 @@ public class GameManagerScript : MonoBehaviour {
 
     private IEnumerator TakeItems(int picks)
     {
+
+        //disable all buttons
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("TakeButton");
+
+        foreach (GameObject button in buttons)
+        {
+            button.GetComponent<Button>().interactable = false;
+        }
+
         //grab front, reset current front to last one.
         for (int i = 0; i < picks; i++)
         {
