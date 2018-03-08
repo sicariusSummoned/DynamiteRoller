@@ -16,5 +16,5 @@ abstract public class PowerUpParent : MonoBehaviour {
 
 	//do the power up action and take reference to whatever player has been picked to have 
 	//the actiion preformed upon.
-	public abstract void UsePowerUp (int playerNum);
+	public abstract GameObject UsePowerUp (GameObject player);
 }
