@@ -31,6 +31,9 @@ public class PlayerScript : MonoBehaviour {
     {
         Debug.Log("Gained " + points + " points");
         score += points;
+
+        //Sound effects here plz
+        AudioManagerScript.instance.PlayGemSound();
     }
 
     //apply the bomb effect
@@ -38,6 +41,9 @@ public class PlayerScript : MonoBehaviour {
     {
         Debug.Log("BOOM! Lose half your score");
         score = (int) Mathf.Ceil((float)(score / 2.0));
+
+        //Sound effects here plz
+        AudioManagerScript.instance.PlayExplosionSound();
     }
 
     public int getScore()
