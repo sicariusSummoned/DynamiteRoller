@@ -13,6 +13,9 @@ public class GameManagerScript : MonoBehaviour {
     private bool firstTime = true;
     private int roundCounter = 0;
     private bool gameOver = false;
+    public GameObject HotPotato;
+    public GameObject AllOrNothing;
+    public GameObject HardEarth;
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +55,28 @@ public class GameManagerScript : MonoBehaviour {
             if(roundCounter >= 4)
             {
                 gameOver = true;
+            }
+            else
+            {
+                //give players a powerup
+                for (int i = 0; i < Players.Length; i++)
+                {
+                    //get a random powerup
+                    int powerUpNum = Random.Range(0, 3);
+
+                    if(powerUpNum == 0)
+                    {
+                        Players[i].powerUp = (HotPotato) HotPotato.GetComponent("HotPotato");
+                    }
+                    else if (powerUpNum == 1)
+                    {
+                        Players[i].powerUp = (HardEarth) HardEarth.GetComponent("HardEarth");
+                    }
+                    else
+                    {
+                        Players[i].powerUp = (AllOrNothing) AllOrNothing.GetComponent("AllOrNothing");
+                    }
+                }
             }
         }
 
@@ -206,5 +231,13 @@ public class GameManagerScript : MonoBehaviour {
             Debug.Log("GREEN wins with a score of " + s4);
         }
 
+    }
+    
+    //use the active player's powerup
+    //TODO give the player a way to cancel the powerup activation without losing it
+    //TODO get the desired target player
+    public void usePowerUp()
+    {
+        Debug.Log("Active player's powerup is " + Players[ActivePlayer].powerUp);
     }
 }
