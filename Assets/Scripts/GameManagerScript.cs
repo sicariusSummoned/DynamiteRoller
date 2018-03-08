@@ -15,9 +15,6 @@ public class GameManagerScript : MonoBehaviour {
     private bool firstTime = true;
     private int roundCounter = 0;
     private bool gameOver = false;
-    public GameObject HotPotato;
-    public GameObject AllOrNothing;
-    public GameObject HardEarth;
 
     private const float PAUSE_DUR = 0.4f;
     private const int DECK_CAP = 8;
@@ -60,28 +57,6 @@ public class GameManagerScript : MonoBehaviour {
             if(roundCounter >= 4)
             {
                 gameOver = true;
-            }
-            else
-            {
-                //give players a powerup
-                for (int i = 0; i < Players.Length; i++)
-                {
-                    //get a random powerup
-                    int powerUpNum = Random.Range(0, 3);
-
-                    if(powerUpNum == 0)
-                    {
-                        Players[i].powerUp = (HotPotato) HotPotato.GetComponent("HotPotato");
-                    }
-                    else if (powerUpNum == 1)
-                    {
-                        Players[i].powerUp = (HardEarth) HardEarth.GetComponent("HardEarth");
-                    }
-                    else
-                    {
-                        Players[i].powerUp = (AllOrNothing) AllOrNothing.GetComponent("AllOrNothing");
-                    }
-                }
             }
         }
 

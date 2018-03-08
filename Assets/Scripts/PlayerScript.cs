@@ -6,13 +6,12 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour {
 
     private int score;      //player's total score
-    public PowerUpParent powerUp;       //replace with custom PowerUp class when we add powerUps TODO
+    private bool powerUp;       //replace with custom PowerUp class when we add powerUps TODO
     public Text scoreText;
 
 	// Use this for initialization
 	void Start () {
         score = 0;
-        powerUp = null;
 	}
 	
 	// Update is called once per frame
