@@ -16,6 +16,9 @@ public class HardEarth : PowerUpParent {
 
     public override GameObject UsePowerUp(GameObject player)
     {
-        return player;
+		if (player.GetComponent<PlayerScript> () != null) {
+			player.GetComponent<PlayerScript> ().HardEarthActive = true;
+		}
+		return player;
     }
 }

@@ -1348,6 +1348,10 @@ MonoBehaviour:
   HotPotato: {fileID: 1594337060}
   AllOrNothing: {fileID: 1774429470}
   HardEarth: {fileID: 1627691857}
+  take2: {fileID: 411696006}
+  take3: {fileID: 1212077879}
+  take4: {fileID: 943027417}
+  targetPlayer: {fileID: 0}
 --- !u!4 &691275484
 Transform:
   m_ObjectHideFlags: 0

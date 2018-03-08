@@ -17,6 +17,14 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject AllOrNothing;
     public GameObject HardEarth;
 
+
+	public Button take2;
+	public Button take3;
+	public Button take4;
+
+	public GameObject targetPlayer; 
+
+
 	// Use this for initialization
 	void Start () {
         ActivePlayer = 0;
@@ -43,6 +51,11 @@ public class GameManagerScript : MonoBehaviour {
 
     public void SwitchActive()
     {
+		if (targetPlayer.GetComponent<PlayerScript> ().AONActive == true) {
+			take2.interactable = false;
+			take3.interactable = false;
+			take4.interactable = false;
+		}
         if (ActivePlayer < 3)
         {
             ActivePlayer++;
@@ -78,6 +91,9 @@ public class GameManagerScript : MonoBehaviour {
                     }
                 }
             }
+			take2.interactable = true;
+			take3.interactable = true;
+			take4.interactable = true;
         }
 
 
@@ -109,13 +125,32 @@ public class GameManagerScript : MonoBehaviour {
         }
     }
 
+	public void CallHardEarthP(){
+		GameObject.Find ("HardEarth").GetComponent<HardEarth> ().UsePowerUp (targetPlayer);
+	}
+	public void CallAONP(){
+		GameObject.Find ("AllOrNothing").GetComponent<AllOrNothing> ().UsePowerUp (targetPlayer);
+	}
+	public void CallHotPotatoP(){
+		GameObject.Find ("HotPotato").GetComponent<HotPotato> ().UsePowerUp (targetPlayer);
+	}
+
     //active player gain points
     public void PickSome(int picks)
     {
         //grab front, reset current front to last one.
         for(int i = 0; i < picks; i++)
         {
-            Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
+			//hard earth is active, ignore first one priority
+			if (targetPlayer.GetComponent<PlayerScript> ().HardEarthActive == true) {
+				targetPlayer.GetComponent<PlayerScript> ().HardEarthActive = false;
+			} else {
+				//I need the type for just checking bombs
+				//if (Deck [0].GetType (BombScript) == true) {
+				//	Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[targetPlayer]);
+				//}
+				Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
+			}
             Destroy(Deck[0]);
             Deck.RemoveAt(0);
         }

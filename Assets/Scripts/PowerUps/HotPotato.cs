@@ -16,6 +16,9 @@ public class HotPotato : PowerUpParent {
 
     public override GameObject UsePowerUp(GameObject player)
     {
-        return player;
+		if (player.GetComponent<PlayerScript> () != null) {
+			player.GetComponent<PlayerScript> ().HotPotatoActive = true;
+		}
+		return player;
     }
 }

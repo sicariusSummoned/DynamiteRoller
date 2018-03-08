@@ -8,11 +8,29 @@ public class PlayerScript : MonoBehaviour {
     private int score;      //player's total score
     public PowerUpParent powerUp;       //replace with custom PowerUp class when we add powerUps TODO
     public Text scoreText;
+	//powerups bool
+	private bool hotPotatoActive=false;
+	private bool aONActive=false;
+	private bool hardEarthActive=false;
+
 
 	// Use this for initialization
 	void Start () {
         score = 0;
         powerUp = null;
+	}
+
+	public bool HotPotatoActive{
+		get{ return hotPotatoActive; }
+		set{ hotPotatoActive = value; }
+	}
+	public bool AONActive{
+		get{ return aONActive; }
+		set{ aONActive = value; }
+	}
+	public bool HardEarthActive{
+		get{ return hardEarthActive; }
+		set{ hardEarthActive = value; }
 	}
 	
 	// Update is called once per frame
