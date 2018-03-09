@@ -18,6 +18,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject HotPotato;
     public GameObject AllOrNothing;
     public GameObject HardEarth;
+    public GameObject targetPlayer;     //player targeted by a powerup
 
     private const float PAUSE_DUR = 0.4f;
     private const int DECK_CAP = 8;
@@ -39,6 +40,7 @@ public class GameManagerScript : MonoBehaviour {
 
 
         firstTime = true;
+        targetPlayer = null;
     }
 	
 	// Update is called once per frame
@@ -61,7 +63,8 @@ public class GameManagerScript : MonoBehaviour {
             {
                 gameOver = true;
             }
-            else
+            //give the player a powerup every 2 rounds
+            else if ((roundCounter + 1) % 2 == 0)
             {
                 //give players a powerup
                 for (int i = 0; i < Players.Length; i++)
@@ -265,9 +268,33 @@ public class GameManagerScript : MonoBehaviour {
         //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
 
         firstTime = false;
+        targetPlayer = null;
 
         //call it here or update?
         Refill();
 
+    }
+
+    //apply a powerups effect
+    public void ApplyPowerup(GameObject player)
+    {
+        //check that the active player has a powerup, if not then exit
+        if (Players[ActivePlayer].powerUp == null)
+        {
+            Debug.Log("no powerup");
+            return;
+        }
+        //check that the player isn't the active player
+        else if (player == Players[ActivePlayer].gameObject)
+        {
+            Debug.Log("You can't target yourself");
+            //TODO make a visual thing to say you can't target yourself
+        }
+        //make sure that there is no targetplayer before assigning
+        else if (targetPlayer == null)
+        {
+            targetPlayer = Players[ActivePlayer].powerUp.UsePowerUp(player);
+            Debug.Log(targetPlayer);
+        }
     }
 }

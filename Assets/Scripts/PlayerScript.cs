@@ -9,10 +9,18 @@ public class PlayerScript : MonoBehaviour {
     public PowerUpParent powerUp;       //replace with custom PowerUp class when we add powerUps TODO
     public Text scoreText;
 
+    //is this player under the effects of one of these?
+    public bool allOrNothing;
+    public bool hardEarth;
+    public bool hotPotato;
+
 	// Use this for initialization
 	void Start () {
         score = 0;
         powerUp = null;
+        allOrNothing = false;
+        hardEarth = false;
+        hotPotato = false;
 	}
 	
 	// Update is called once per frame
@@ -49,9 +57,10 @@ public class PlayerScript : MonoBehaviour {
     //If the player has a powerup, use it
     public void ApplyPowerUp()
     {
-        if (powerUp != null)
-        {
-            //powerUp.apply();
-        }
+        //get gamemanager script
+        GameManagerScript gameManager = (GameManagerScript) GameObject.FindGameObjectWithTag("GameController").GetComponent("GameManagerScript");
+
+        //send this player as the targeted player to the gamemanager
+        gameManager.ApplyPowerup(this.gameObject);
     }
 }
