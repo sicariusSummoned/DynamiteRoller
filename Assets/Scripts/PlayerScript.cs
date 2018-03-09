@@ -13,7 +13,6 @@ public class PlayerScript : MonoBehaviour {
 	private bool aONActive=false;
 	private bool hardEarthActive=false;
 
-
 	// Use this for initialization
 	void Start () {
         score = 0;
@@ -67,9 +66,10 @@ public class PlayerScript : MonoBehaviour {
     //If the player has a powerup, use it
     public void ApplyPowerUp()
     {
-        if (powerUp != null)
-        {
-            //powerUp.apply();
-        }
+        //get gamemanager script
+        GameManagerScript gameManager = (GameManagerScript) GameObject.FindGameObjectWithTag("GameController").GetComponent("GameManagerScript");
+
+        //send this player as the targeted player to the gamemanager
+        gameManager.ApplyPowerup(this.gameObject);
     }
 }
