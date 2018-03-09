@@ -16,7 +16,7 @@ public class GameManagerScript : MonoBehaviour {
     private int roundCounter = 0;
     private bool gameOver = false;
 
-    private const float PAUSE_DUR = 0.4f;
+    private const float PAUSE_DUR = 0.8f;
     private const int DECK_CAP = 8;
 
 	// Use this for initialization
