@@ -109,11 +109,13 @@ public class GameManagerScript : MonoBehaviour {
             {
                 Deck[i + initCount].SetActive(true);
                 Deck[i + initCount].transform.SetParent(activeGems.transform);
+                Deck[i + initCount].transform.localScale = Vector3.one;
             }
 
             else
             {
                 Deck[i + initCount].transform.SetParent(waitingGems.transform);
+                Deck[i + initCount].transform.localScale = Vector3.one;
             }
         }
 
@@ -172,7 +174,7 @@ public class GameManagerScript : MonoBehaviour {
         }
 
         newObj.SetActive(false);
-
+        
         return newObj;
     }
 
