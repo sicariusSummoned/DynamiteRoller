@@ -17,7 +17,7 @@ public class AllOrNothing : PowerUpParent {
     public override GameObject UsePowerUp(GameObject player)
     {
 		if (player.GetComponent<PlayerScript> () != null) {
-			player.GetComponent<PlayerScript> ().AONActive = true;
+			player.GetComponent<PlayerScript> ().AllOrNothingActive = true;
 		}
         return player;
     }

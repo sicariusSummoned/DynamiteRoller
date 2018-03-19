@@ -9,23 +9,26 @@ public class PlayerScript : MonoBehaviour {
     public PowerUpParent powerUp;       //replace with custom PowerUp class when we add powerUps TODO
     public Text scoreText;
 	//powerups bool
-	private bool hotPotatoActive=false;
-	private bool aONActive=false;
-	private bool hardEarthActive=false;
+	private bool hotPotatoActive;
+	private bool allOrNothingActive;
+	private bool hardEarthActive;
 
 	// Use this for initialization
 	void Start () {
         score = 0;
         powerUp = null;
+        hotPotatoActive = false;
+        allOrNothingActive = false;
+        hardEarthActive = false;
 	}
 
 	public bool HotPotatoActive{
 		get{ return hotPotatoActive; }
 		set{ hotPotatoActive = value; }
 	}
-	public bool AONActive{
-		get{ return aONActive; }
-		set{ aONActive = value; }
+	public bool AllOrNothingActive{
+		get{ return allOrNothingActive; }
+		set{ allOrNothingActive = value; }
 	}
 	public bool HardEarthActive{
 		get{ return hardEarthActive; }

@@ -57,11 +57,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void SwitchActive()
     {
-		if (targetPlayer.GetComponent<PlayerScript> ().AONActive == true) {
-			take2.interactable = false;
-			take3.interactable = false;
-			take4.interactable = false;
-		}
+        //switch active player
         if (ActivePlayer < 3)
         {
             ActivePlayer++;
@@ -71,7 +67,7 @@ public class GameManagerScript : MonoBehaviour {
             roundCounter++;
             ActivePlayer = 0;
 
-            if(roundCounter >= 4)
+            if(roundCounter >= 5)
             {
                 gameOver = true;
             }
@@ -98,12 +94,25 @@ public class GameManagerScript : MonoBehaviour {
                     }
                 }
             }
+            //turn on takes 2 to 4
 			take2.interactable = true;
 			take3.interactable = true;
 			take4.interactable = true;
         }
 
+        //determine if all or nothing is in effect
+        if (Players[ActivePlayer].AllOrNothingActive)
+        {
+            //turn off takes 2 to 4
+            take2.interactable = false;
+            take3.interactable = false;
+            take4.interactable = false;
 
+            //turn off all or nothing
+            Players[ActivePlayer].AllOrNothingActive = false;
+        }
+
+        //determine if game ended
         if (!gameOver)
         {
             //Debug.Log("It is now Player " + (ActivePlayer + 1) + "'s turn.");
@@ -131,16 +140,6 @@ public class GameManagerScript : MonoBehaviour {
             endGame();
         }
     }
-
-	public void CallHardEarthP(){
-		GameObject.Find ("HardEarth").GetComponent<HardEarth> ().UsePowerUp (targetPlayer);
-	}
-	public void CallAONP(){
-		GameObject.Find ("AllOrNothing").GetComponent<AllOrNothing> ().UsePowerUp (targetPlayer);
-	}
-	public void CallHotPotatoP(){
-		GameObject.Find ("HotPotato").GetComponent<HotPotato> ().UsePowerUp (targetPlayer);
-	}
 
     //active player gain points
     public void PickSome(int picks)
@@ -276,11 +275,32 @@ public class GameManagerScript : MonoBehaviour {
             Transform frontGem = activeGems.transform.GetChild(0);
             Transform waitingGem = waitingGems.transform.GetChild(0);
 
+            //check if player has hardearth active
+            if (Players[ActivePlayer].HardEarthActive)
+            {
+                //remove the front of the deck as if it was taken without applying its effect
+                Destroy(Deck[0]);
+                Destroy(frontGem);
+                Deck.RemoveAt(0);
 
-            Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
-            Destroy(Deck[0]);
-            Destroy(frontGem);
-            Deck.RemoveAt(0);
+                //turn off hard earth
+                Players[ActivePlayer].HardEarthActive = false;
+            }
+            //check if target player exists
+            if (targetPlayer != null && targetPlayer.GetComponent<PlayerScript>().HotPotatoActive)
+            {
+                //check if front of deck is a bomb
+
+            }
+            else
+            {
+                //take items normally
+                Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
+                Destroy(Deck[0]);
+                Destroy(frontGem);
+                Deck.RemoveAt(0);
+            }
+            
 
             Deck[2].SetActive(true);
 
@@ -293,6 +313,11 @@ public class GameManagerScript : MonoBehaviour {
         //Debug.Log("Player " + (ActivePlayer + 1) + "'s current score is " + Players[ActivePlayer].getScore());
 
         firstTime = false;
+
+        //turn off hotpotato
+        targetPlayer.GetComponent<PlayerScript>().HotPotatoActive = false;
+
+        //reset targetplayer
         targetPlayer = null;
 
         //call it here or update?
