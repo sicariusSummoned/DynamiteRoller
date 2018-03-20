@@ -290,7 +290,22 @@ public class GameManagerScript : MonoBehaviour {
             if (targetPlayer != null && targetPlayer.GetComponent<PlayerScript>().HotPotatoActive)
             {
                 //check if front of deck is a bomb
-
+                if (Deck[0].GetComponent<PickUpScript>().GetType().Equals(new BombScript))
+                {
+                    //give the bomb to the target player
+                    Deck[0].GetComponent<PickUpScript>().ApplyScore(targetPlayer.GetComponent<PlayerScript>());
+                    Destroy(Deck[0]);
+                    Destroy(frontGem);
+                    Deck.RemoveAt(0);
+                }
+                else
+                {
+                    //take the gem for the active player
+                    Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
+                    Destroy(Deck[0]);
+                    Destroy(frontGem);
+                    Deck.RemoveAt(0);
+                }
             }
             else
             {
