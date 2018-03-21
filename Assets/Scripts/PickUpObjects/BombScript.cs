@@ -18,4 +18,9 @@ public class BombScript : PickUpScript {
     {
         player.Bomb();
     }
+
+    public override string GetType()
+    {
+        return "Bomb";
+    }
 }

@@ -18,4 +18,5 @@ abstract public class PickUpScript : MonoBehaviour {
 	}
 
     public abstract void ApplyScore(PlayerScript player);
+    public abstract string GetType();
 }

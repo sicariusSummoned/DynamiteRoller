@@ -20,4 +20,9 @@ public class Gem2Script : PickUpScript {
     {
         player.ApplyScore(value);
     }
+
+    public override string GetType()
+    {
+        return "Gem";
+    }
 }

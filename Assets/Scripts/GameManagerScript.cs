@@ -78,19 +78,22 @@ public class GameManagerScript : MonoBehaviour {
                 for (int i = 0; i < Players.Length; i++)
                 {
                     //get a random powerup
-                    int powerUpNum = Random.Range(0, 3);
+                    int powerUpNum = Random.Range(0, 10);
 
-                    if(powerUpNum == 0)
+                    if(powerUpNum <= 3)
                     {
                         Players[i].powerUp = (HotPotato) HotPotato.GetComponent("HotPotato");
+                        Debug.Log("HotPotato given to player " + i);
                     }
-                    else if (powerUpNum == 1)
+                    else if (powerUpNum <= 7)
                     {
                         Players[i].powerUp = (HardEarth) HardEarth.GetComponent("HardEarth");
+                        Debug.Log("HardEarth given to player " + i);
                     }
                     else
                     {
                         Players[i].powerUp = (AllOrNothing) AllOrNothing.GetComponent("AllOrNothing");
+                        Debug.Log("AllOrNothing given to player " + i);
                     }
                 }
             }
@@ -287,10 +290,10 @@ public class GameManagerScript : MonoBehaviour {
                 Players[ActivePlayer].HardEarthActive = false;
             }
             //check if target player exists
-            if (targetPlayer != null && targetPlayer.GetComponent<PlayerScript>().HotPotatoActive)
+            else if (targetPlayer != null && targetPlayer.GetComponent<PlayerScript>().HotPotatoActive)
             {
                 //check if front of deck is a bomb
-                if (Deck[0].GetComponent<PickUpScript>().GetType().Equals(new BombScript))
+                if (Deck[0].GetComponent<PickUpScript>().GetType().Equals("Bomb"))
                 {
                     //give the bomb to the target player
                     Deck[0].GetComponent<PickUpScript>().ApplyScore(targetPlayer.GetComponent<PlayerScript>());
@@ -330,7 +333,11 @@ public class GameManagerScript : MonoBehaviour {
         firstTime = false;
 
         //turn off hotpotato
-        targetPlayer.GetComponent<PlayerScript>().HotPotatoActive = false;
+        if (targetPlayer != null)
+        {
+            targetPlayer.GetComponent<PlayerScript>().HotPotatoActive = false;
+        }
+        
 
         //reset targetplayer
         targetPlayer = null;
