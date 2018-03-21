@@ -12,6 +12,9 @@ public class AudioManagerScript : MonoBehaviour {
     public float lowestPitch = 0.95f;
     public float highestPitch = 1.05f;
 
+    private float pitchAlt = 0.02f;
+    public int numConsec = 0;
+
     public AudioClip[] fxClips;
 
     public AudioClip explosionClip;
@@ -52,19 +55,21 @@ public class AudioManagerScript : MonoBehaviour {
 
     public void PlaySFX(AudioClip clip)
     {
-        float randomPitch = Random.Range(lowestPitch, highestPitch);
-        sfxSource.pitch = randomPitch;
+        //float randomPitch = Random.Range(lowestPitch, highestPitch);
+        sfxSource.pitch = lowestPitch + (numConsec * pitchAlt);
         sfxSource.clip = clip;
         sfxSource.Play();
     }
 
     public void PlayExplosionSound()
     {
+        numConsec = 0;
         PlaySFX(explosionClip);
     }
 
     public void PlayGemSound()
     {
+        numConsec++;
         PlaySFX(gemTwinkleClip);
     }
 }

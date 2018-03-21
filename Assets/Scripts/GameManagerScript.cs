@@ -45,6 +45,8 @@ public class GameManagerScript : MonoBehaviour {
 
     public void SwitchActive()
     {
+        GameObject.Find("AudioManager").GetComponent<AudioManagerScript>().numConsec = 0;
+
         if (ActivePlayer < 3)
         {
             ActivePlayer++;
