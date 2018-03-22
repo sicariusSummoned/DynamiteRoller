@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour {
 
     private int score;      //player's total score
-    private bool powerUp;       //replace with custom PowerUp class when we add powerUps TODO
+    public PowerUpParent powerUp;       //replace with custom PowerUp class when we add powerUps TODO
     public Text scoreText;
 	//powerups bool
 	private bool hotPotatoActive;
