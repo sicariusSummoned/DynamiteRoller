@@ -20,7 +20,8 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject HardEarth;
     public GameObject targetPlayer;     //player targeted by a powerup
 
-    private const float PAUSE_DUR = 0.4f;
+
+    private const float PAUSE_DUR = 0.8f;
     private const int DECK_CAP = 8;
 
 
@@ -57,7 +58,9 @@ public class GameManagerScript : MonoBehaviour {
 
     public void SwitchActive()
     {
-        //switch active player
+        GameObject.Find("AudioManager").GetComponent<AudioManagerScript>().numConsec = 0;
+		
+		//switch active player
         if (ActivePlayer < 3)
         {
             ActivePlayer++;
@@ -164,12 +167,22 @@ public class GameManagerScript : MonoBehaviour {
             {
                 Deck[i + initCount].SetActive(true);
                 Deck[i + initCount].transform.SetParent(activeGems.transform);
+                Deck[i + initCount].transform.localScale = Vector3.one;
             }
 
             else
             {
                 Deck[i + initCount].transform.SetParent(waitingGems.transform);
+                Deck[i + initCount].transform.localScale = Vector3.one;
             }
+        }
+
+        //enable all buttons
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("TakeButton");
+
+        foreach (GameObject button in buttons)
+        {
+            button.GetComponent<Button>().interactable = true;
         }
 
         //just call this here?
@@ -219,7 +232,7 @@ public class GameManagerScript : MonoBehaviour {
         }
 
         newObj.SetActive(false);
-
+        
         return newObj;
     }
 
@@ -270,6 +283,15 @@ public class GameManagerScript : MonoBehaviour {
 
     private IEnumerator TakeItems(int picks)
     {
+
+        //disable all buttons
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("TakeButton");
+
+        foreach (GameObject button in buttons)
+        {
+            button.GetComponent<Button>().interactable = false;
+        }
+
         //grab front, reset current front to last one.
         for (int i = 0; i < picks; i++)
         {
