@@ -12,6 +12,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject waitingPanel;
     public GameObject activeGems;
     public GameObject waitingGems;
+    public Text ActivePowerup;
     private bool firstTime = true;
     private int roundCounter = 0;
     private bool gameOver = false;
@@ -19,6 +20,9 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject AllOrNothing;
     public GameObject HardEarth;
     public GameObject targetPlayer;     //player targeted by a powerup
+
+    public GameObject unpauseButton;
+    public GameObject pauseMessage;
 
 
     private const float PAUSE_DUR = 0.8f;
@@ -49,6 +53,9 @@ public class GameManagerScript : MonoBehaviour {
 
         firstTime = true;
         targetPlayer = null;
+
+        pauseMessage.SetActive(false);
+        unpauseButton.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -104,6 +111,30 @@ public class GameManagerScript : MonoBehaviour {
 			take2.interactable = true;
 			take3.interactable = true;
 			take4.interactable = true;
+        }
+
+        //determine current powerup
+        if (Players[ActivePlayer].powerUp != null)
+        {
+            if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("HotPotato"))
+            {
+                ActivePowerup.text = "Hot Potato\nPasses all bombs taken this turn to another player\nClick on your target to use.";
+            }
+
+            else if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("HardEarth"))
+            {
+                ActivePowerup.text = "Hard Earth\nThe first gem the chosen player takes their next turn is nullified\nClick on your target to use.";
+            }
+
+            else if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("AllOrNothing"))
+            {
+                ActivePowerup.text = "All or Nothing\nOn their next turn, the chosen player can only choose to take 1 or 5 gems.\nClick on your target to use.";
+            }
+
+            else
+            {
+                ActivePowerup.text = "";
+            }
         }
 
         //determine if all or nothing is in effect
@@ -188,7 +219,7 @@ public class GameManagerScript : MonoBehaviour {
         //just call this here?
         if (!firstTime)
         {
-            SwitchActive();
+            PauseGame();
         }
 
     }
@@ -246,9 +277,9 @@ public class GameManagerScript : MonoBehaviour {
         Debug.Log("Game over!");
 
         //disable all buttons
-        GameObject[] buttons = GameObject.FindGameObjectsWithTag("TakeButton");
+        Button[] buttons = GameObject.FindObjectsOfType<Button>();
 
-        foreach(GameObject button in buttons)
+        foreach(Button button in buttons)
         {
             button.GetComponent<Button>().interactable = false;
         }
@@ -369,6 +400,40 @@ public class GameManagerScript : MonoBehaviour {
 
     }
 
+    public void PauseGame()
+    {
+        //disable all buttons
+        Button[] buttons = GameObject.FindObjectsOfType<Button>();
+
+        foreach (Button button in buttons)
+        {
+            button.GetComponent<Button>().interactable = false;
+        }
+
+        pauseMessage.SetActive(true);
+        unpauseButton.SetActive(true);
+
+        unpauseButton.GetComponent<Button>().interactable = true;
+    }
+
+    public void Unpause()
+    {
+        //enable all buttons
+        Button[] buttons = GameObject.FindObjectsOfType<Button>();
+
+        foreach (Button button in buttons)
+        {
+            button.GetComponent<Button>().interactable = true;
+        }
+
+        pauseMessage.SetActive(false);
+        unpauseButton.SetActive(false);
+
+        unpauseButton.GetComponent<Button>().interactable = false;
+
+        SwitchActive();
+    }
+
     //apply a powerups effect
     public void ApplyPowerup(GameObject player)
     {
@@ -388,6 +453,7 @@ public class GameManagerScript : MonoBehaviour {
         else if (targetPlayer == null)
         {
             targetPlayer = Players[ActivePlayer].powerUp.UsePowerUp(player);
+            Players[ActivePlayer].powerUp = null;
             Debug.Log(targetPlayer);
         }
     }
