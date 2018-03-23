@@ -626,7 +626,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -636,7 +636,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -1233,7 +1233,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -1243,7 +1243,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -1344,7 +1344,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -1354,7 +1354,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -2221,7 +2221,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e1d4bc76ac100b143a1ae46005c74eee, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dbb601b634fe66a40b309b285fd6454c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2856,7 +2856,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
@@ -2866,7 +2866,7 @@ Prefab:
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 224572210052733100, guid: aeed943c75b4be54b879930dab43cf6e,
         type: 2}

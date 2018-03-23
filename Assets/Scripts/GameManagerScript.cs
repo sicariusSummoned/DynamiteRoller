@@ -130,11 +130,11 @@ public class GameManagerScript : MonoBehaviour {
             {
                 ActivePowerup.text = "All or Nothing\nOn their next turn, the chosen player can only choose to take 1 or 5 gems.\nClick on your target to use.";
             }
+        }
 
-            else
-            {
-                ActivePowerup.text = "";
-            }
+        else
+        {
+            ActivePowerup.text = "";
         }
 
         //determine if all or nothing is in effect
