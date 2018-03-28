@@ -20,6 +20,8 @@ public class AudioManagerScript : MonoBehaviour {
     public AudioClip explosionClip;
     public AudioClip gemTwinkleClip;
 
+    private bool soundOn = true;
+
 
     //Refactor this to make it so that the audio plays sequentially instead of interrupting each other.
 
@@ -48,17 +50,17 @@ public class AudioManagerScript : MonoBehaviour {
 
     public void PlaySingle(AudioClip clip)
     {
-        sfxSource.pitch = 1.0f;
-        sfxSource.clip = clip;
-        sfxSource.Play();
+            sfxSource.pitch = 1.0f;
+            sfxSource.clip = clip;
+            sfxSource.Play();
     }
 
     public void PlaySFX(AudioClip clip)
     {
-        //float randomPitch = Random.Range(lowestPitch, highestPitch);
-        sfxSource.pitch = lowestPitch + (numConsec * pitchAlt);
-        sfxSource.clip = clip;
-        sfxSource.Play();
+            //float randomPitch = Random.Range(lowestPitch, highestPitch);
+            sfxSource.pitch = lowestPitch + (numConsec * pitchAlt);
+            sfxSource.clip = clip;
+            sfxSource.Play();
     }
 
     public void PlayExplosionSound()
@@ -71,5 +73,26 @@ public class AudioManagerScript : MonoBehaviour {
     {
         numConsec++;
         PlaySFX(gemTwinkleClip);
+    }
+
+    public void toggleSound()
+    {
+        Debug.Log("toggleSound");
+
+        if (soundOn)
+        {
+            soundOn = false;
+            sfxSource.mute = true;
+            musicSource.mute = true;
+        }
+
+        else if(!soundOn)
+        {
+            soundOn = true;
+            sfxSource.mute = false;
+            musicSource.mute = false;
+        }
+
+        Debug.Log(soundOn);
     }
 }
