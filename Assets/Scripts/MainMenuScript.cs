@@ -30,7 +30,7 @@ public class MainMenuScript : MonoBehaviour {
 
     public void creditsButton()
     {
-
+        SceneManager.LoadScene("CreditsScene");
     }
 
     public void backButton()
@@ -42,4 +42,5 @@ public class MainMenuScript : MonoBehaviour {
     {
         Application.Quit();
     }
+
 }
