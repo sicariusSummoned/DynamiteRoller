@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour {
 
@@ -24,6 +25,9 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject unpauseButton;
     public GameObject pauseMessage;
 
+    public GameObject victoryText;
+    public GameObject victoryContainer;
+    public GameObject menuButton;
 
     private const float PAUSE_DUR = 0.8f;
     private const int DECK_CAP = 8;
@@ -56,6 +60,10 @@ public class GameManagerScript : MonoBehaviour {
 
         pauseMessage.SetActive(false);
         unpauseButton.SetActive(false);
+        victoryText.SetActive(false);
+        victoryContainer.SetActive(false);
+        menuButton.SetActive(false);
+        menuButton.GetComponent<Button>().interactable = false;
     }
 	
 	// Update is called once per frame
@@ -276,13 +284,9 @@ public class GameManagerScript : MonoBehaviour {
     {
         Debug.Log("Game over!");
 
-        //disable all buttons
-        Button[] buttons = GameObject.FindObjectsOfType<Button>();
+        ArrayList winners = new ArrayList();
 
-        foreach(Button button in buttons)
-        {
-            button.GetComponent<Button>().interactable = false;
-        }
+        int winScore = 0;
 
         //report player(s) with most score
         int s1 = Players[0].getScore();
@@ -293,22 +297,32 @@ public class GameManagerScript : MonoBehaviour {
         if(s1 >= s2 && s1 >= s3 && s1 >= s4)
         {
             Debug.Log("RED wins with a score of " + s1);
+            winners.Add(GameObject.Find("Player1"));
+            winScore = s1;
         }
 
         if(s2 >= s1 && s2 >= s3 && s2 >= s4)
         {
             Debug.Log("BLUE wins with a score of " + s2);
+            winners.Add(GameObject.Find("Player2"));
+            winScore = s2;
         }
 
         if(s3 >= s1 && s3 >= s2 && s3 >= s4)
         {
             Debug.Log("YELLOW wins with a score of " + s3);
+            winners.Add(GameObject.Find("Player3"));
+            winScore = s3;
         }
 
         if(s4 >= s1 && s4 >= s2 && s4 >= s3)
         {
             Debug.Log("GREEN wins with a score of " + s4);
+            winners.Add(GameObject.Find("Player4"));
+            winScore = s4;
         }
+
+        VictoryMenu(winners, winScore);
 
     }
 
@@ -456,5 +470,45 @@ public class GameManagerScript : MonoBehaviour {
             Players[ActivePlayer].powerUp = null;
             Debug.Log(targetPlayer);
         }
+    }
+
+    private void VictoryMenu(ArrayList winDwarves, int finalScore)
+    {
+        Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+
+        GameObject[] children = canvas.GetComponentsInChildren<GameObject>();
+
+        foreach(GameObject obj in children)
+        {
+            obj.SetActive(false);
+        }
+
+        victoryContainer.SetActive(true);
+        victoryText.SetActive(true);
+        menuButton.SetActive(true);
+        menuButton.GetComponent<Button>().interactable = true;
+
+        foreach(GameObject obj in winDwarves)
+        {
+            obj.SetActive(true);
+            obj.transform.SetParent(victoryContainer.transform);
+        }
+
+        Text vicText = victoryText.GetComponent<Text>();
+
+        vicText.text = "Congratulations to the winning player";
+
+        if (winDwarves.Count > 1)
+        {
+            vicText.text += "s";
+        }
+
+        vicText.text += "\nWith a final score of: ";
+        vicText.text += finalScore.ToString();
+    }
+
+    public void backButton()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
