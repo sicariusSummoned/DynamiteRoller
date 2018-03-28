@@ -362,6 +362,8 @@ public class GameManagerScript : MonoBehaviour {
                 //check if front of deck is a bomb
                 if (Deck[0].GetComponent<PickUpScript>().GetType().Equals("Bomb"))
                 {
+
+                    
                     //give the bomb to the target player
                     Deck[0].GetComponent<PickUpScript>().ApplyScore(targetPlayer.GetComponent<PlayerScript>());
                     Destroy(Deck[0]);
@@ -369,14 +371,20 @@ public class GameManagerScript : MonoBehaviour {
                     Deck.RemoveAt(0);
 
                     //Hot potato explosion FX here (targetPlayer)
+                    ParticleManager.instance.generateParticles("explosion", targetPlayer.transform);
+
                 }
                 else
                 {
+                    
+
                     //take the gem for the active player
                     Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
                     Destroy(Deck[0]);
                     Destroy(frontGem);
                     Deck.RemoveAt(0);
+
+                    ParticleManager.instance.generateParticles("shine", Players[ActivePlayer].transform);
                 }
             }
             else
@@ -384,9 +392,16 @@ public class GameManagerScript : MonoBehaviour {
                 if (Deck[0].GetComponent<PickUpScript>().GetType().Equals("Bomb"))
                 {
                     //Regular explosion FX here (ActivePlayer)
+                    ParticleManager.instance.generateParticles("explosion", Players[ActivePlayer].transform);
+                }
+                else
+                {
+                    ParticleManager.instance.generateParticles("shine", Players[ActivePlayer].transform);
                 }
 
 
+
+                
                 //take items normally
                 Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
                 Destroy(Deck[0]);
