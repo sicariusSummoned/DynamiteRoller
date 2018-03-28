@@ -23,17 +23,18 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject targetPlayer;     //player targeted by a powerup
 
     public GameObject unpauseButton;
-    public GameObject pauseMessage;
     public GameObject toggleSound;
-
-    public GameObject victoryText;
-    public GameObject victoryContainer;
     public GameObject menuButton;
+    public Text victoryText;
+    public GameObject victoryDwarves;
+    
+    public GameObject pausePanel;
+    public GameObject victoryPanel;
 
     private const float PAUSE_DUR = 0.8f;
     private const int DECK_CAP = 8;
-
-
+    private const int NUM_ROUNDS = 5;
+    
 	public Button take2;
 	public Button take3;
 	public Button take4;
@@ -59,14 +60,8 @@ public class GameManagerScript : MonoBehaviour {
         firstTime = true;
         targetPlayer = null;
 
-        pauseMessage.SetActive(false);
-        unpauseButton.SetActive(false);
-        toggleSound.SetActive(false);
-
-        victoryText.SetActive(false);
-        victoryContainer.SetActive(false);
-        menuButton.SetActive(false);
-        menuButton.GetComponent<Button>().interactable = false;
+        pausePanel.SetActive(false);
+        victoryPanel.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -88,10 +83,11 @@ public class GameManagerScript : MonoBehaviour {
             roundCounter++;
             ActivePlayer = 0;
 
-            if(roundCounter >= 5)
+            if(roundCounter >= NUM_ROUNDS)
             {
                 gameOver = true;
             }
+
             //give the player a powerup every 2 rounds
             else if ((roundCounter + 1) % 2 == 0)
             {
@@ -181,12 +177,15 @@ public class GameManagerScript : MonoBehaviour {
 
             //move the waiting player into active
             waitingPlayer.SetParent(activePanel.transform);
+
+            PauseGame();
         }
 
         else if(gameOver)
         {
             endGame();
         }
+
     }
 
     //active player gain points
@@ -230,7 +229,7 @@ public class GameManagerScript : MonoBehaviour {
         //just call this here?
         if (!firstTime)
         {
-            PauseGame();
+            SwitchActive();
         }
 
     }
@@ -451,12 +450,11 @@ public class GameManagerScript : MonoBehaviour {
             button.GetComponent<Button>().interactable = false;
         }
 
-        pauseMessage.SetActive(true);
-        unpauseButton.SetActive(true);
-        toggleSound.SetActive(true);
+        pausePanel.SetActive(true);
 
         unpauseButton.GetComponent<Button>().interactable = true;
         toggleSound.GetComponent<Button>().interactable = true;
+
     }
 
     public void Unpause()
@@ -469,14 +467,11 @@ public class GameManagerScript : MonoBehaviour {
             button.GetComponent<Button>().interactable = true;
         }
 
-        pauseMessage.SetActive(false);
-        unpauseButton.SetActive(false);
-        toggleSound.SetActive(false);
-
         unpauseButton.GetComponent<Button>().interactable = false;
         toggleSound.GetComponent<Button>().interactable = false;
 
-        SwitchActive();
+        pausePanel.SetActive(false);
+
     }
 
     //apply a powerups effect
@@ -505,37 +500,26 @@ public class GameManagerScript : MonoBehaviour {
 
     private void VictoryMenu(ArrayList winDwarves, int finalScore)
     {
-        Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+        victoryPanel.SetActive(true);
 
-        GameObject[] children = canvas.GetComponentsInChildren<GameObject>();
-
-        foreach(GameObject obj in children)
-        {
-            obj.SetActive(false);
-        }
-
-        victoryContainer.SetActive(true);
-        victoryText.SetActive(true);
-        menuButton.SetActive(true);
         menuButton.GetComponent<Button>().interactable = true;
 
         foreach(GameObject obj in winDwarves)
         {
             obj.SetActive(true);
-            obj.transform.SetParent(victoryContainer.transform);
+            obj.transform.SetParent(victoryDwarves.transform);
         }
 
-        Text vicText = victoryText.GetComponent<Text>();
 
-        vicText.text = "Congratulations to the winning player";
+        victoryText.text = "Congratulations to the winning player";
 
         if (winDwarves.Count > 1)
         {
-            vicText.text += "s";
+            victoryText.text += "s";
         }
 
-        vicText.text += "\nWith a final score of: ";
-        vicText.text += finalScore.ToString();
+        victoryText.text += "\nWith a final score of: ";
+        victoryText.text += finalScore.ToString();
     }
 
     public void backButton()
