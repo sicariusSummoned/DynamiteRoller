@@ -367,6 +367,8 @@ public class GameManagerScript : MonoBehaviour {
                     Destroy(Deck[0]);
                     Destroy(frontGem);
                     Deck.RemoveAt(0);
+
+                    //Hot potato explosion FX here (targetPlayer)
                 }
                 else
                 {
@@ -379,11 +381,18 @@ public class GameManagerScript : MonoBehaviour {
             }
             else
             {
+                if (Deck[0].GetComponent<PickUpScript>().GetType().Equals("Bomb"))
+                {
+                    //Regular explosion FX here (ActivePlayer)
+                }
+
+
                 //take items normally
                 Deck[0].GetComponent<PickUpScript>().ApplyScore(Players[ActivePlayer]);
                 Destroy(Deck[0]);
                 Destroy(frontGem);
                 Deck.RemoveAt(0);
+
             }
             
 
