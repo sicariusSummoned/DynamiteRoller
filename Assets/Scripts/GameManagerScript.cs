@@ -24,6 +24,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public GameObject unpauseButton;
     public GameObject pauseMessage;
+    public GameObject toggleSound;
 
     public GameObject victoryText;
     public GameObject victoryContainer;
@@ -60,6 +61,8 @@ public class GameManagerScript : MonoBehaviour {
 
         pauseMessage.SetActive(false);
         unpauseButton.SetActive(false);
+        toggleSound.SetActive(false);
+
         victoryText.SetActive(false);
         victoryContainer.SetActive(false);
         menuButton.SetActive(false);
@@ -435,8 +438,10 @@ public class GameManagerScript : MonoBehaviour {
 
         pauseMessage.SetActive(true);
         unpauseButton.SetActive(true);
+        toggleSound.SetActive(true);
 
         unpauseButton.GetComponent<Button>().interactable = true;
+        toggleSound.GetComponent<Button>().interactable = true;
     }
 
     public void Unpause()
@@ -451,8 +456,10 @@ public class GameManagerScript : MonoBehaviour {
 
         pauseMessage.SetActive(false);
         unpauseButton.SetActive(false);
+        toggleSound.SetActive(false);
 
         unpauseButton.GetComponent<Button>().interactable = false;
+        toggleSound.GetComponent<Button>().interactable = false;
 
         SwitchActive();
     }
