@@ -435,6 +435,16 @@ public class GameManagerScript : MonoBehaviour {
             button.GetComponent<Button>().interactable = false;
         }
 
+        //destroy every particle system
+        GameObject[] particles = GameObject.FindGameObjectsWithTag("Particle");
+        if (particles.Length > 0)
+        {
+            for (int i = particles.Length - 1; i >= 0; i--)
+            {
+                Destroy(particles[i]);
+            }
+        }
+
         ActivePowerup.SetActive(false);
 
         pausePanel.SetActive(true);
