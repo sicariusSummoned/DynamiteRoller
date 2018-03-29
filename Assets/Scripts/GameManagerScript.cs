@@ -13,7 +13,10 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject waitingPanel;
     public GameObject activeGems;
     public GameObject waitingGems;
-    public Text ActivePowerup;
+    public GameObject ActivePowerup;
+    public Sprite AllOrNothingImage;
+    public Sprite HardEarthImage;
+    public Sprite HotPotatoImage;
     private bool firstTime = true;
     private int roundCounter = 0;
     private bool gameOver = false;
@@ -39,7 +42,7 @@ public class GameManagerScript : MonoBehaviour {
 	public Button take3;
 	public Button take4;
 
-
+    private bool playersTargetable;     //used to avoid targeting players during a round
 
 	// Use this for initialization
 	void Start () {
@@ -58,10 +61,12 @@ public class GameManagerScript : MonoBehaviour {
 
 
         firstTime = true;
+        playersTargetable = true;
         targetPlayer = null;
 
         pausePanel.SetActive(false);
         victoryPanel.SetActive(false);
+        ActivePowerup.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -118,30 +123,6 @@ public class GameManagerScript : MonoBehaviour {
 			take2.interactable = true;
 			take3.interactable = true;
 			take4.interactable = true;
-        }
-
-        //determine current powerup
-        if (Players[ActivePlayer].powerUp != null)
-        {
-            if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("HotPotato"))
-            {
-                ActivePowerup.text = "Hot Potato\nPasses all bombs taken this turn to another player\nClick on your target to use.";
-            }
-
-            else if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("HardEarth"))
-            {
-                ActivePowerup.text = "Hard Earth\nThe first gem the chosen player takes their next turn is nullified\nClick on your target to use.";
-            }
-
-            else if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("AllOrNothing"))
-            {
-                ActivePowerup.text = "All or Nothing\nOn their next turn, the chosen player can only choose to take 1 or 5 gems.\nClick on your target to use.";
-            }
-        }
-
-        else
-        {
-            ActivePowerup.text = "";
         }
 
         //determine if all or nothing is in effect
@@ -225,6 +206,8 @@ public class GameManagerScript : MonoBehaviour {
         {
             button.GetComponent<Button>().interactable = true;
         }
+
+        playersTargetable = true;
 
         //just call this here?
         if (!firstTime)
@@ -339,6 +322,8 @@ public class GameManagerScript : MonoBehaviour {
             button.GetComponent<Button>().interactable = false;
         }
 
+        playersTargetable = false;
+
         //grab front, reset current front to last one.
         for (int i = 0; i < picks; i++)
         {
@@ -450,6 +435,8 @@ public class GameManagerScript : MonoBehaviour {
             button.GetComponent<Button>().interactable = false;
         }
 
+        ActivePowerup.SetActive(false);
+
         pausePanel.SetActive(true);
 
         unpauseButton.GetComponent<Button>().interactable = true;
@@ -466,6 +453,26 @@ public class GameManagerScript : MonoBehaviour {
         {
             button.GetComponent<Button>().interactable = true;
         }
+        
+        //determine current powerup
+        if (Players[ActivePlayer].powerUp != null)
+        {
+            ActivePowerup.SetActive(true);
+            if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("HotPotato"))
+            {
+                ActivePowerup.GetComponent<Image>().sprite = HotPotatoImage;
+            }
+
+            else if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("HardEarth"))
+            {
+                ActivePowerup.GetComponent<Image>().sprite = HardEarthImage;
+            }
+
+            else if (Players[ActivePlayer].powerUp.GetType().ToString().Equals("AllOrNothing"))
+            {
+                ActivePowerup.GetComponent<Image>().sprite = AllOrNothingImage;
+            }
+        }
 
         unpauseButton.GetComponent<Button>().interactable = false;
         toggleSound.GetComponent<Button>().interactable = false;
@@ -478,7 +485,7 @@ public class GameManagerScript : MonoBehaviour {
     public void ApplyPowerup(GameObject player)
     {
         //check that the active player has a powerup, if not then exit
-        if (Players[ActivePlayer].powerUp == null)
+        if (Players[ActivePlayer].powerUp == null || playersTargetable == false)
         {
             Debug.Log("no powerup");
             return;
@@ -494,6 +501,8 @@ public class GameManagerScript : MonoBehaviour {
         {
             targetPlayer = Players[ActivePlayer].powerUp.UsePowerUp(player);
             Players[ActivePlayer].powerUp = null;
+            ActivePowerup.SetActive(false);
+            ParticleManager.instance.generateParticles("target", targetPlayer.transform);
             Debug.Log(targetPlayer);
         }
     }

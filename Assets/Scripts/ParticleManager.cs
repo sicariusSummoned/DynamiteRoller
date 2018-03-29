@@ -9,6 +9,7 @@ public class ParticleManager : MonoBehaviour {
     Transform particleLocation;
     public ParticleSystem explosionSystem;
     public ParticleSystem shineSystem;
+    public ParticleSystem targetedSystem;
 
     void Awake()
     {
@@ -44,6 +45,10 @@ public class ParticleManager : MonoBehaviour {
         else if(particleType == "shine")
         {
             Instantiate<ParticleSystem>(shineSystem, particleLocation);
+        }
+        else if(particleType == "target")
+        {
+            Instantiate<ParticleSystem>(targetedSystem, particleLocation);
         }
     }
 }
