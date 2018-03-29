@@ -102,12 +102,12 @@ public class GameManagerScript : MonoBehaviour {
                     //get a random powerup
                     int powerUpNum = Random.Range(0, 10);
 
-                    if(powerUpNum <= 3)
+                    if(powerUpNum <= 2)
                     {
                         Players[i].powerUp = (HotPotato) HotPotato.GetComponent("HotPotato");
                         Debug.Log("HotPotato given to player " + i);
                     }
-                    else if (powerUpNum <= 7)
+                    else if (powerUpNum <= 6)
                     {
                         Players[i].powerUp = (HardEarth) HardEarth.GetComponent("HardEarth");
                         Debug.Log("HardEarth given to player " + i);
@@ -123,18 +123,6 @@ public class GameManagerScript : MonoBehaviour {
 			take2.interactable = true;
 			take3.interactable = true;
 			take4.interactable = true;
-        }
-
-        //determine if all or nothing is in effect
-        if (Players[ActivePlayer].AllOrNothingActive)
-        {
-            //turn off takes 2 to 4
-            take2.interactable = false;
-            take3.interactable = false;
-            take4.interactable = false;
-
-            //turn off all or nothing
-            Players[ActivePlayer].AllOrNothingActive = false;
         }
 
         //determine if game ended
@@ -482,6 +470,18 @@ public class GameManagerScript : MonoBehaviour {
             {
                 ActivePowerup.GetComponent<Image>().sprite = AllOrNothingImage;
             }
+        }
+
+        //determine if all or nothing is in effect
+        if (Players[ActivePlayer].AllOrNothingActive)
+        {
+            //turn off takes 2 to 4
+            take2.interactable = false;
+            take3.interactable = false;
+            take4.interactable = false;
+
+            //turn off all or nothing
+            Players[ActivePlayer].AllOrNothingActive = false;
         }
 
         unpauseButton.GetComponent<Button>().interactable = false;
