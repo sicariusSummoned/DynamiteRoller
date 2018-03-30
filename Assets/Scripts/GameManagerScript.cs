@@ -24,6 +24,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject AllOrNothing;
     public GameObject HardEarth;
     public GameObject targetPlayer;     //player targeted by a powerup
+    public AudioManagerScript audioManager;
 
     public GameObject unpauseButton;
     public GameObject toggleSound;
@@ -76,7 +77,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void SwitchActive()
     {
-        GameObject.Find("AudioManager").GetComponent<AudioManagerScript>().numConsec = 0;
+        audioManager.numConsec = 0;
 		
 		//switch active player
         if (ActivePlayer < 3)
@@ -256,6 +257,8 @@ public class GameManagerScript : MonoBehaviour {
     private void endGame()
     {
         Debug.Log("Game over!");
+
+        audioManager.playVictory();
 
         ArrayList winners = new ArrayList();
 
@@ -543,6 +546,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void backButton()
     {
+        audioManager.playMain();
         SceneManager.LoadScene("MainMenu");
     }
 }

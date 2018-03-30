@@ -20,6 +20,9 @@ public class AudioManagerScript : MonoBehaviour {
     public AudioClip explosionClip;
     public AudioClip gemTwinkleClip;
 
+    public AudioClip mainTheme;
+    public AudioClip victoryTheme;
+
     private bool soundOn = true;
 
 
@@ -94,5 +97,17 @@ public class AudioManagerScript : MonoBehaviour {
         }
 
         Debug.Log(soundOn);
+    }
+
+    public void playVictory()
+    {
+        musicSource.clip = victoryTheme;
+        musicSource.Play();
+    }
+
+    public void playMain()
+    {
+        musicSource.clip = mainTheme;
+        musicSource.Play();
     }
 }
